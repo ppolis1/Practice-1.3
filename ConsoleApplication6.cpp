@@ -1,15 +1,18 @@
 ﻿// ConsoleApplication6.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
-#include <stdio.h> 
-#include <iostream>
-#include "windows.h"
-#include <iomanip>
-#include <cstdlib>
-#include <conio.h>
-#include <ctime>
+#include <chrono>
+#include <thread>
 using namespace std;
 const int n = 8;
+void gotoXY(int x, int y) //вывод матрицы по спирали
+{
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+    this_thread::sleep_for(chrono::milliseconds(400));
+}
 void printmas(int (*arr)[n], int n)
 {
     for (int i = 0; i < n; i++)
@@ -54,92 +57,6 @@ void output_matrix(int (*a)[n], int n) {
         }
     }
 }
-void quicksort(int* arr, int  endn, int begin)
-{
-    int mid;
-    int f = begin;
-    int l = endn;
-    mid = arr[(f + l) / 2];
-    while (f < l)
-    {
-        while (arr[f] < mid) f++; //В левой части массива пропускаем(оставляем на месте) элементы, которые меньше центрального
-        while (arr[l] > mid) l--; // В правой части пропускаем элементы, которые больше центрального
-        if (f <= l)
-        {
-            swap(arr[f], arr[l]); ////Меняем элементы местами
-            f++;
-            l--;
-        }
-    }
-    ////Рекурсивные вызовы, если осталось, что сортировать
-    if (begin < l) quicksort(arr, l, begin);
-    if (f < endn) quicksort(arr, endn, f);
-}
-void bubblesort(int (*arr)[n], int n)
-{
-    for (int k = 0; k < n; ++k) 
-        for (int l = 0; l < n; ++l) 
-            for (int i = 0; i < n; ++i) 
-                for (int j = 0; j < n; ++j) {
-                    if ((i + 1 == n) && (j + 1 == n))
-                        continue;
-                    else {
-                        if (j + 1 == n && arr[i][j] > arr[i + 1][0])
-                            swap(arr[i][j], arr[i + 1][0]);
-                        else {
-                            if (arr[i][j] > arr[i][j + 1])
-                                swap(arr[i][j], arr[i][j + 1]);
-                        }
-                    }
-                }
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            cout << setw(4) << arr[i][j];
-            if (j == (n - 1)) 
-                cout << "\n";
-        }
-    }
- }
-void shakersort(int(*mas)[n], int n)
-{
-    int left = 0, right = n - 1;
-    int flag = 1; 
-    while ((left < right) && flag > 0)
-    {
-        flag = 0;
-        for (int i = left; i < right; i++) 
-            for (int j = 0; j < n; ++j)
-            {
-                if (mas[i][j] > mas[i + 1][j]) 
-                {             
-                    swap(mas[i][j], mas[i + 1][j]);
-                    flag = 1;      // перемещения в этом цикле были
-                }
-            }
-        right--; 
-        for (int i = right; i > left; i--)
-            for (int j = 0; j < n; ++j)
-            {
-                if (mas[i - 1][j] > mas[i][j]) {
-                    swap(mas[i - 1][j], mas[i][j]);
-                    flag = 1;    // перемещения в этом цикле были
-                }
-            }
-        left++; // сдвигаем левую границу на следующий элемент
-    }
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            cout << setw(4)<< mas[i][j];
-            if (j == (n - 1))
-                cout << "\n";
-        }
-    }
-}
-
 void qsort(int *arr[], int endl, int begin)
 {
     int mid;
@@ -164,9 +81,6 @@ void qsort(int *arr[], int endl, int begin)
 #define N 4
 int main() {
     srand(time(0));
-
-    cout << "\tTask 1\n\n";
-    cout << "a)\n";
     int const n = 8;
     int i = 1, I, j, k,
         p = n / 2;
@@ -184,34 +98,33 @@ int main() {
     {
 
         //Верхний горизонтальный столбец 
-        for (j = (k-1); j < (n-k+1); j++) *ptr[(k-1)*n + j] = i++;
-
+        for (j = (k - 1), I = k-1; j < (n - k + 1); j++, I++) {
+            *ptr[(k - 1) * n + j] = i++;
+            gotoXY(I * 3, k-1);
+            cout << *ptr[(k - 1) * n + j];
+        }
         //Правый верхний столбец
-
-        for (j = k; j < (n - k + 1); j++)
+        for (j = k, I = k; j < (n - k + 1); j++, I++) {
             *ptr[j * n + (n - k)] = i++;
+            gotoXY((n-k)*3, I);
+            cout << *ptr[j * n + (n - k)];
+        }
 
         //Нижний горизонтальный столбец
-        for (j = (n-k-1); j >= (k-1); --j)
+        for (j = (n - k - 1), I=n-k-1; j >= (k - 1); --j, I--) {
             *ptr[(n - k) * n + j] = i++;
+            gotoXY(I * 3, n - k );
+            cout << *ptr[(n - k) * n + j];
+        }
 
         //Левый верхний столбец
-
-        for (j = (n - k - 1); j >= k; j--) 
+        for (j = (n - k - 1),I=n-k-1; j >= k; j--,I--) {
             *ptr[j * n + (k - 1)] = i++;
-    }
-
-    for (i = 0; i < n; ++i)
-        for (j = 0; j < n; ++j) {
-
-            if (n * n < 20 * 20)
-            {
-                Sleep(30);
-                cout << setw(4)<< * ptr[i * n + j];
-                if (j == (n - 1)) 
-                    cout<< "\n";
-            }
+            gotoXY((k-1) * 3, I);
+            cout << *ptr[j * n + (k - 1)];
         }
+    }
+    cout << "\n\n\n\n\n";
     cout << "b)\n";
 
     int arr[n][n];
@@ -297,10 +210,6 @@ int main() {
             arr[i][j] = rand() % 49 + 1;
     printmas(&arr[0], n);
 
-    cout << "\nBubble sort\n";
-    bubblesort(&arr[0], n);
-    cout << "\nShaker sort\n";
-    shakersort(&arr[0], n);
     cout << "\nQuick sort\n";
     int* pa[n];
     for (i = 0; i < n; i++)
