@@ -1,6 +1,12 @@
 ﻿// ConsoleApplication6.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
-
+#include <stdio.h> 
+#include <iostream>
+#include "windows.h"
+#include <iomanip>
+#include <cstdlib>
+#include <conio.h>
+#include <ctime>
 #include <chrono>
 #include <thread>
 using namespace std;
