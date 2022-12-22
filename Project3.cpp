@@ -154,7 +154,7 @@ void printsort(int* pointer, int N, int* end) {
     quickSort(pointer, N, end);
     printMatrix(pointer, N, end);
 }
-int main3() {
+int main() {
     srand(time(0));
     int const n = 8;
     int i = 1, p = n / 2;
