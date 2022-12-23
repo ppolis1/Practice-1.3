@@ -200,10 +200,10 @@ int main() {
     {
         for (int j = 0; j < p; j++)
         {
-            arr1[i][j] = arr[i + p][j + p];
-            arr1[i][j + p] = arr[i+p][j];
-            arr1[i + p][j + p] = arr[i][j];
-            arr1[i + p][j] = arr[i][j + p];
+            arr1[i][j] = arr2[i + p][j + p];
+            arr1[i][j + p] = arr2[i+p][j];
+            arr1[i + p][j + p] = arr2[i][j];
+            arr1[i + p][j] = arr2[i][j + p];
         }
     }
     printmas(&arr1[0], n);
@@ -212,10 +212,10 @@ int main() {
     {
         for (int j = 0; j < p; j++)
         {
-            arr1[i][j] = arr[i + p][j];
-            arr1[i][j + p] = arr[i + p][j + p];
-            arr1[i + p][j] = arr[i][j];
-            arr1[i + p][j + p] = arr[i][j + p];
+            arr1[i][j] = arr2[i + p][j];
+            arr1[i][j + p] = arr2[i + p][j + p];
+            arr1[i + p][j] = arr2[i][j];
+            arr1[i + p][j + p] = arr2[i][j + p];
         }
     }
     printmas(&arr1[0], n);
@@ -224,10 +224,10 @@ int main() {
     {
         for (int j = 0; j < p; j++)
         {
-            arr1[i][j] = arr[i][j + p];
-            arr1[i][j + p] = arr[i][j];
-            arr1[i + p][j] = arr[i + p][j + p];
-            arr1[i + p][j + p] = arr[i + p][j];
+            arr1[i][j] = arr2[i][j + p];
+            arr1[i][j + p] = arr2[i][j];
+            arr1[i + p][j] = arr2[i + p][j + p];
+            arr1[i + p][j + p] = arr2[i + p][j];
         }
     }
     printmas(&arr1[0], n);
